@@ -5,29 +5,31 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { IComponent } from '../../redux/componentsSlice';
+import { IComplect } from '../../redux/complectsSlice';
 
 interface MySelectProps {
-  name: string,
-  items: IComponent[],
-  setName: (event: string) => void,
+  value: string,
+  items: IComponent[] | IComplect[],
+  setValue: (event: string) => void,
+  label: string,
 }
 
-export const MySelect:React.FC<MySelectProps> = ({items, name, setName}) => {
+export const MySelect:React.FC<MySelectProps> = ({items, value, setValue, label}) => {
   
 
   const handleChange = (event: SelectChangeEvent<string>) => {
-    setName(event.target.value);
+    setValue(event.target.value);
   };
 
   return (
     <>
       <Box sx={{ width: 220 }}>
       <FormControl variant='standard' size='small' fullWidth>
-        <InputLabel id="demo-simple-select-label">Компонент</InputLabel>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={name}
+          value={value}
           label="Компонент"
           onChange={handleChange}
         >

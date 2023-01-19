@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAppDispatch } from '../hooks';
 import { deleteBuyOperation, IBuyOperation } from '../redux/buyOperationsSlice'
-import { decreaseCount } from '../redux/componentsSlice';
+import { decreaseComponentCount } from '../redux/componentsSlice';
 
 
 export const BuyOperationItem: React.FC<IBuyOperation> = (props) => {
@@ -11,7 +11,7 @@ export const BuyOperationItem: React.FC<IBuyOperation> = (props) => {
     const removeOperation = (id: number) => {
         dispatch(deleteBuyOperation(id));
         components.forEach(item => {
-            dispatch(decreaseCount({...item}))
+            dispatch(decreaseComponentCount({...item}))
         })
     }
 

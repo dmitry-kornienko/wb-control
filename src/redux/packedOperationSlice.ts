@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IComplect } from "./complectsSlice";
 
-interface IPackedOperation {
+export interface IPackedOperation {
     id: number,
     date: string,
-    complect: IComplect,
+    complectName: string,
+    article?: string,
+    count: number,
 }
 
 interface packedOperationState {
