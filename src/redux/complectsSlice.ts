@@ -60,13 +60,13 @@ const complectSlice = createSlice({
     name: 'complect',
     initialState,
     reducers: {
-        increaseCount(state, action: PayloadAction<IComplect>) {
+        increaseComplectCount(state, action: PayloadAction<IComplect>) {
             const toggledComponent = state.list.find(comlect => comlect.id === action.payload.id);
             if (toggledComponent) {
                 toggledComponent.count += action.payload.count;
             }
         },
-        decreaseCount(state, action: PayloadAction<IComplect>) {
+        decreaseComplectCount(state, action: PayloadAction<IComplect>) {
             const toggledComponent = state.list.find(complect => complect.id === action.payload.id);
             if (toggledComponent) {
                 toggledComponent.count -= action.payload.count;
@@ -75,7 +75,7 @@ const complectSlice = createSlice({
     }
 });
 
-export const { decreaseCount, increaseCount } = complectSlice.actions;
+export const { decreaseComplectCount, increaseComplectCount } = complectSlice.actions;
 
 export default complectSlice.reducer;
 
