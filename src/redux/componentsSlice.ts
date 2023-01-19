@@ -33,26 +33,24 @@ const initialState: IComponentsState = {
     ]
 }
 
-interface IToggleAction extends IComponent {}
-
 const componentSlice = createSlice({
     name: 'component',
     initialState,
     reducers: {
-        increaseCount(state, action: PayloadAction<IToggleAction>) {
-            const toggledComponent = state.list.find(component => component.id === action.payload.id);
+        increaseCount(state, action: PayloadAction<IComponent>) {
+            const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.count += action.payload.count;
             }
         },
-        decreaseCount(state, action: PayloadAction<IToggleAction>) {
-            const toggledComponent = state.list.find(component => component.id === action.payload.id);
+        decreaseCount(state, action: PayloadAction<IComponent>) {
+            const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.count -= action.payload.count;
             }
         },
-        changePrice(state, action: PayloadAction<IToggleAction>) {
-            const toggledComponent = state.list.find(component => component.id === action.payload.id);
+        changePrice(state, action: PayloadAction<IComponent>) {
+            const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.price = action.payload.price;
             }

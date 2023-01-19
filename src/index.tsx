@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './redux/index';
 import App from './App';
 import './index.css';
+import { ContextProvider } from './context/Context';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
     <Provider store={store}>
-      <App />
+      <ContextProvider>
+        <App />
+      </ContextProvider>
     </Provider>
     </BrowserRouter>
   </React.StrictMode>

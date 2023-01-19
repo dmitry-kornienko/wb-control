@@ -4,34 +4,40 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import React, { useState } from 'react';
 import { MyInput } from '../UI/MyInput';
 import { MySelect } from '../UI/MySelect';
-import { IComponent } from '../../redux/componentsSlice';
-import { useAppSelector } from '../../hooks';
+import { changePrice, IComponent, increaseCount } from '../../redux/componentsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Button from '@mui/material/Button';
+import { addBuyOperation, IBuyOperation } from '../../redux/buyOperationsSlice';
+import { useContextAll } from '../../context/Context';
 
 interface FormBuyOperationProps {
     setActive: any,
 }
 
 export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) => {
-    const components = useAppSelector(state => state.components.list)
+
+    const components = useAppSelector(state => state.components.list);
+    const dispatch = useAppDispatch();
     const [name, setName] = useState('');
     const [count, setCount] = useState(0);
     const [price, setPrice] = useState(0);
     const [date, setDate] = useState('');
     const [newComponents, setNewComponents] = useState<IComponent[]>([]);
 
-    const [countError, setCountError] = useState(false)
-    const [priceError, setPriceError] = useState(false)
-    const [nameError, setNameError] = useState(false)
-    const [dateError, setDateError] = useState(false)
+    const [countError, setCountError] = useState(false);
+    const [priceError, setPriceError] = useState(false);
+    const [nameError, setNameError] = useState(false);
+    const [dateError, setDateError] = useState(false);
+
+    const { changeDateFormat } = useContextAll();
 
     const addNewComponent = () => {
         if (name && count > 0 && price > 0) {
             const newComponent = {
                 id: Date.now(),
                 name,
-                count,
-                price,
+                count: Number(count),
+                price: Number(price),
             }
             setNewComponents([...newComponents, newComponent])
             setName('');
@@ -44,27 +50,29 @@ export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) =
             setCountError(true);
             setPriceError(true);
             setNameError(true)
-            // const emptiFields: string[] = []
-            // !name && emptiFields.push('Наименование компонента')
-            // !count && emptiFields.push('Количество')
-            // !price && emptiFields.push('Цена')
-            // // alert(`Не заполнены поля: ${emptiFields.join(', ')}`)
         }
     }
+
     const deleteNewComponent = (id: number) => {
         setNewComponents(newComponents.filter(component => component.id !== id))
     }
-    const addNewBuyOperation = () => {
+
+    const addOperation = () => {
         if (date && newComponents.length > 0) {
-            const newBuyOperation = {
+            const newBuyOperation: IBuyOperation = {
                 id: Date.now(),
-                date,
+                date: changeDateFormat(date),
                 components: newComponents,
             }
+            dispatch(addBuyOperation(newBuyOperation));
+            newComponents.forEach(item => {
+                dispatch(increaseCount({...item}));
+                dispatch(changePrice({...item}));
+            })
             setActive(false);
         } else {
-            setDateError(true)
-            newComponents.length < 1 && alert('Список товаров пуст')
+            setDateError(true);
+            newComponents.length < 1 && alert('Список товаров пуст');
         }
     }
     
@@ -73,15 +81,15 @@ export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) =
         <div className='flex justify-center items-end gap-5'>
             <div>
                 <MySelect items={components} name={name} setName={setName}  />
-                {!name && <div className={nameError ? 'text-[10px] absolute text-red-500' : 'hidden'}>Укажите наименование</div>}
+                {!name && <div className={nameError ? 'text-[10px] absolute text-red-500 font-bold' : 'hidden'}>Укажите наименование</div>}
             </div>
             <div>
                 <MyInput value={count} setValue={setCount} width='70px' type='number' label='Кол-во' />
-                {!count && <div className={countError ? 'text-[10px] absolute text-red-500' : 'hidden'}>Укажите кол-во</div>}
+                {!count && <div className={countError ? 'text-[10px] absolute text-red-500 font-bold' : 'hidden'}>Укажите кол-во</div>}
             </div>
             <div>
                 <MyInput value={price} setValue={setPrice} width='70px' type='number' label='Цена' />
-                {!price && <div className={priceError ? 'text-[10px] absolute text-red-500' : 'hidden'}>Укажите цену</div>}
+                {!price && <div className={priceError ? 'text-[10px] absolute text-red-500 font-bold' : 'hidden'}>Укажите цену</div>}
             </div>
             <IconButton onClick={addNewComponent} color="primary" aria-label="add to shopping cart">
                 <AddBoxOutlinedIcon fontSize='small' color='success' />
@@ -99,20 +107,21 @@ export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) =
                 </div>
             )}
             {newComponents.length > 0 &&
-                <div className='mx-auto mt-5'>Итого: <span className='font-medium border-b-2 text-lg border-b-black'>{newComponents.reduce((sum, item) => sum + (item.count * item.price), 0).toFixed(2)} руб.</span>
+                <div className='mx-auto mt-5'>
+                    Итого: <span className='font-medium border-b-2 text-lg border-b-black'>{newComponents.reduce((sum, item) => sum + (item.count * item.price), 0).toFixed(2)} руб.</span>
                 </div>
             }
         </div>
         <div className='flex flex-col justify-center items-center'>
             <div>
                 <MyInput type='date' value={date} setValue={setDate} width='120px' />
-                {!date && <div className={dateError ? 'text-[10px] absolute text-red-500' : 'hidden'}>Укажите дату</div>}
+                {!date && <div className={dateError ? 'text-[10px] absolute text-red-500 font-bold' : 'hidden'}>Укажите дату</div>}
             </div>
             <div className='flex justify-center gap-3 mt-5'>
                 <Button
                     size='small' 
                     variant="contained"
-                    onClick={addNewBuyOperation}
+                    onClick={addOperation}
                 >
                     Провести операцию
                 </Button>
