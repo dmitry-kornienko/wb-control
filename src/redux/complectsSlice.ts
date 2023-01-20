@@ -15,7 +15,7 @@ interface IComplectsState {
 
 const initialState: IComplectsState = {
     list: [
-        {id: 1, name: '100м на Ленте шаг 20см', article: 'bgr-wp-100', count: 0,components: [
+        {id: 1, name: '100м на Ленте шаг 20см', article: 'bgr-wp-100', count: 0, components: [
             {name: 'Капельная лента 20-6-1.6', count: 100},
             {name: 'Слепая лента', count: 10},
             {name: 'Тройник ЛЛЛ', count: 9},
@@ -54,22 +54,25 @@ const initialState: IComplectsState = {
     ]
 }
 
-// interface IToggleAction extends IComponent {}
+interface changeComplectCount {
+    id: number | undefined,
+    count: number,
+}
 
 const complectSlice = createSlice({
     name: 'complect',
     initialState,
     reducers: {
-        increaseComplectCount(state, action: PayloadAction<IComplect>) {
-            const toggledComponent = state.list.find(comlect => comlect.id === action.payload.id);
-            if (toggledComponent) {
-                toggledComponent.count += action.payload.count;
+        increaseComplectCount(state, action: PayloadAction<changeComplectCount>) {
+            const toggledComplect = state.list.find(complect => complect.id === action.payload.id);
+            if (toggledComplect) {
+                toggledComplect.count += Number(action.payload.count);
             }
         },
-        decreaseComplectCount(state, action: PayloadAction<IComplect>) {
-            const toggledComponent = state.list.find(complect => complect.id === action.payload.id);
-            if (toggledComponent) {
-                toggledComponent.count -= action.payload.count;
+        decreaseComplectCount(state, action: PayloadAction<changeComplectCount>) {
+            const toggledComplect = state.list.find(complect => complect.id === action.payload.id);
+            if (toggledComplect) {
+                toggledComplect.count -= action.payload.count;
             }
         },
     }

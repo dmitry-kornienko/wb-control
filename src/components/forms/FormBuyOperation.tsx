@@ -4,7 +4,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import React, { useState } from 'react';
 import { MyInput } from '../UI/MyInput';
 import { MySelect } from '../UI/MySelect';
-import { changePrice, IComponent, increaseCount } from '../../redux/componentsSlice';
+import { changeComponentPrice, IComponent, increaseComponentCount } from '../../redux/componentsSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Button from '@mui/material/Button';
 import { addBuyOperation, IBuyOperation } from '../../redux/buyOperationsSlice';
@@ -66,8 +66,8 @@ export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) =
             }
             dispatch(addBuyOperation(newBuyOperation));
             newComponents.forEach(item => {
-                dispatch(increaseCount({...item}));
-                dispatch(changePrice({...item}));
+                dispatch(increaseComponentCount({...item}));
+                dispatch(changeComponentPrice({...item}));
             })
             setActive(false);
         } else {
@@ -80,7 +80,7 @@ export const FormBuyOperation: React.FC<FormBuyOperationProps> = ({setActive}) =
     <>
         <div className='flex justify-center items-end gap-5'>
             <div>
-                <MySelect items={components} name={name} setName={setName}  />
+                <MySelect label='Компонент' items={components} value={name} setValue={setName}  />
                 {!name && <div className={nameError ? 'text-[10px] absolute text-red-500 font-bold' : 'hidden'}>Укажите наименование</div>}
             </div>
             <div>

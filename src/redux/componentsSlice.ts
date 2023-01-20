@@ -37,19 +37,19 @@ const componentSlice = createSlice({
     name: 'component',
     initialState,
     reducers: {
-        increaseCount(state, action: PayloadAction<IComponent>) {
+        increaseComponentCount(state, action: PayloadAction<IComponent>) {
             const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.count += action.payload.count;
             }
         },
-        decreaseCount(state, action: PayloadAction<IComponent>) {
+        decreaseComponentCount(state, action: PayloadAction<IComponent>) {
             const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.count -= action.payload.count;
             }
         },
-        changePrice(state, action: PayloadAction<IComponent>) {
+        changeComponentPrice(state, action: PayloadAction<IComponent>) {
             const toggledComponent = state.list.find(component => component.name === action.payload.name);
             if (toggledComponent) {
                 toggledComponent.price = action.payload.price;
@@ -58,7 +58,7 @@ const componentSlice = createSlice({
     }
 });
 
-export const { decreaseCount, increaseCount, changePrice } = componentSlice.actions;
+export const { decreaseComponentCount, increaseComponentCount, changeComponentPrice } = componentSlice.actions;
 
 export default componentSlice.reducer;
 
