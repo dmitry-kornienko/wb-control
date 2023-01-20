@@ -4,17 +4,25 @@ import { deletePackedOperation, IPackedOperation } from '../redux/packedOperatio
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { decreaseComplectCount } from '../redux/complectsSlice';
+import { increaseComponentCount } from '../redux/componentsSlice';
 
 export const PackedOperationItem: React.FC<IPackedOperation> = (props) => {
+
     const {id, date, complectName, count, article} = props;
+
     const dispatch = useAppDispatch();
-    const complects = useAppSelector(state => state.complects.list)
+    const complects = useAppSelector(state => state.complects.list);
+    const components = useAppSelector(state => state.components.list);
 
     const currentComplect = complects.find(complect => complect.name === complectName);
 
     const deleteOperation = (id: number) => {
         dispatch(deletePackedOperation(id));
-        dispatch(decreaseComplectCount({count, id: currentComplect?.id}))
+        dispatch(decreaseComplectCount({count, id: currentComplect?.id}));
+        currentComplect?.components.forEach(component => {
+            const currentComponent: any = components.find(item => item.name === component.name);
+            dispatch(increaseComponentCount({...currentComponent, count: component.count * count}));
+        });
     }
 
     return (
@@ -23,9 +31,7 @@ export const PackedOperationItem: React.FC<IPackedOperation> = (props) => {
             <div className='w-[190px]'>{complectName}</div>
             <div className='w-[100px]'>{article}</div>
             <div className='w-[70px]'>{count} шт.</div>
-            <IconButton
-                onClick={() => deleteOperation(id)}
-            >
+            <IconButton onClick={() => deleteOperation(id)}>
                 <DeleteForeverIcon fontSize='small' color='error' />
             </IconButton>
         </div>

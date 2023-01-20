@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useContextAll } from '../../context/Context';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { increaseComplectCount } from '../../redux/complectsSlice';
+import { decreaseComponentCount } from '../../redux/componentsSlice';
 import { addPackedOperation, IPackedOperation } from '../../redux/packedOperationSlice';
 import { MyInput } from '../UI/MyInput';
 import { MySelect } from '../UI/MySelect';
@@ -10,6 +11,7 @@ import { MySelect } from '../UI/MySelect';
 export const FormPackedOperation = () => {
 
     const complects = useAppSelector(state => state.complects.list);
+    const components = useAppSelector(state => state.components.list);
     const dispatch = useAppDispatch();
 
     const [complectName, setComplectName] = useState('');
@@ -33,10 +35,14 @@ export const FormPackedOperation = () => {
                 article: currentComplect?.article,
                 count: Number(count),
             }
-
+            
             dispatch(addPackedOperation(newPackedOperation));
             dispatch(increaseComplectCount({count, id: currentComplect?.id}));
-            
+
+            currentComplect?.components.forEach(component => {
+                const currentComponent: any = components.find(item => item.name === component.name);
+                dispatch(decreaseComponentCount({...currentComponent, count: component.count * count}));
+            });
 
             setCount(0);
             setDate('');
