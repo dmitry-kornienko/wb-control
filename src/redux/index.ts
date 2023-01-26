@@ -3,6 +3,7 @@ import buyOperationsSlice from "./buyOperationsSlice";
 import complectsSlice from "./complectsSlice";
 import componentsReducer from './componentsSlice';
 import packedOperationSlice from "./packedOperationSlice";
+import sentOperationSlice from "./sentOperationSlice";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         complects: complectsSlice,
         buyOperations: buyOperationsSlice,
         packedOperaions: packedOperationSlice,
+        sentOperations: sentOperationSlice,
     }
 });
 
