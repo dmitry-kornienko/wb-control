@@ -34,8 +34,20 @@ const sentOperationSlice = createSlice({
         deleteSentOperation(state, action: PayloadAction<number>) {
             state.list = state.list.filter(operation => operation.id !== action.payload);
         },
+        toggleAgreedSentOperation(state, action: PayloadAction<number>) {
+            const toggledSentOperation = state.list.find(operation => operation.id === action.payload);
+            if (toggledSentOperation) {
+                toggledSentOperation.isAgreed = !toggledSentOperation.isAgreed;
+            }
+        },
+        toggleAcceptedSentOperation(state, action: PayloadAction<number>) {
+            const toggledSentOperation = state.list.find(operation => operation.id === action.payload);
+            if (toggledSentOperation) {
+                toggledSentOperation.isAccepted = !toggledSentOperation.isAccepted;
+            }
+        },
     }
 });
 
-export const {addSentOperation, deleteSentOperation} = sentOperationSlice.actions;
+export const {addSentOperation, deleteSentOperation, toggleAgreedSentOperation, toggleAcceptedSentOperation} = sentOperationSlice.actions;
 export default sentOperationSlice.reducer;

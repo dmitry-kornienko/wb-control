@@ -53,7 +53,7 @@ export const FormSentOperation: React.FC<FormSentOperationProps> = ({setActive})
                 boxCount,
                 weight,
                 documentNumber,
-                plannedDate,
+                plannedDate: changeDateFormat(plannedDate),
                 deliveryPrice,
                 isAgreed: false,
                 isAccepted: false,
