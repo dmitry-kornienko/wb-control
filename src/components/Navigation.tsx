@@ -9,7 +9,8 @@ export const Navigation: React.FC = () => {
             <NavLink to='/buy'>Закупки</NavLink>
             <NavLink to='/packed'>Упаковано</NavLink>
             <NavLink to='/sent'>Поставки</NavLink>
-            <NavLink to='/finance'>Финансы</NavLink>
+            <NavLink to='/statistics'>Статистика</NavLink>
+            <NavLink to='/finance'>Отчеты</NavLink>
         </div>
         <div className='text-[20px] text-gray-700 font-bold'>
             WB Control

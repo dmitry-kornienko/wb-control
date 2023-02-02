@@ -5,6 +5,7 @@ import {BuyPage} from './Pages/BuyPage';
 import {SentPage} from './Pages/SentPage';
 import {PackedPage} from './Pages/PackedPage';
 import {RemainderPage} from './Pages/RemainderPage';
+import {StatisticsPage} from './Pages/StatisticsPage';
 import {FinancePage} from './Pages/FinancePage';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/sent' element={ <SentPage /> } />
         <Route path='/packed' element={ <PackedPage /> } />
         <Route path='/buy' element={ <BuyPage /> } />
+        <Route path='/statistics' element={ <StatisticsPage /> } />
         <Route path='/finance' element={ <FinancePage /> } />
       </Routes>
     </>

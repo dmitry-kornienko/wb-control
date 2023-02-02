@@ -4,6 +4,7 @@ import complectsSlice from "./complectsSlice";
 import componentsReducer from './componentsSlice';
 import packedOperationSlice from "./packedOperationSlice";
 import sentOperationSlice from "./sentOperationSlice";
+import { statisticsApi } from "./statistics.api";
 
 const store = configureStore({
     reducer: {
@@ -12,7 +13,9 @@ const store = configureStore({
         buyOperations: buyOperationsSlice,
         packedOperaions: packedOperationSlice,
         sentOperations: sentOperationSlice,
-    }
+        [statisticsApi.reducerPath]: statisticsApi.reducer,
+    },
+    middleware: (getDefaultMiddlware) => getDefaultMiddlware().concat(statisticsApi.middleware),
 });
 
 export default store;

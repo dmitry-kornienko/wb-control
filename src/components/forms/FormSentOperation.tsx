@@ -62,6 +62,10 @@ export const FormSentOperation: React.FC<FormSentOperationProps> = ({setActive})
             dispatch(addSentOperation(newSentOperation));
             dispatch(decreaseComplectCount({count, id: currentComplect?.id}));
 
+            if (complects.some(complect => complect.count < 0)) {
+                alert('Остаткок данного набора на складе ушел в отрицательное значение. Проверьте фактическое количество на складе.')
+            }
+
             setActive(false);
 
             setCount(0);

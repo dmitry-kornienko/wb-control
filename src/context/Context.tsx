@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface IContext {
     changeDateFormat: (date: string) => string,
@@ -21,8 +21,10 @@ export const ContextProvider: React.FC<ContextProviderProps> = ({ children }) =>
         return dateFormat;
     } 
 
+    const [key, setKey] = useState('');
+
     return (
-        <Context.Provider value={{changeDateFormat}}>
+        <Context.Provider value={{changeDateFormat, key, setKey}}>
             {children}
         </Context.Provider>
     )

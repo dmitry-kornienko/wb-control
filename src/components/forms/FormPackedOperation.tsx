@@ -44,6 +44,11 @@ export const FormPackedOperation = () => {
                 dispatch(decreaseComponentCount({...currentComponent, count: component.count * count}));
             });
 
+            if (components.some(component => component.count < 0)) {
+                const negativeCountComponents = components.filter(component => component.count < 0);
+                alert(`Остатки компонентов на складе ушли в отрицательное значение. Проверьте фактический остаток следующих комплектующих на складе: ${negativeCountComponents.map(component => component.name)}`)
+            }
+
             setCount(0);
             setDate('');
             setComplectName('');

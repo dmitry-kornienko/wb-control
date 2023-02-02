@@ -28,7 +28,7 @@ export const SentOperationItem: React.FC<ISentOperation> = (props) => {
     }
 
     return (
-        <div className='flex flex-col items-center justify-start text-[14px] border-b-2 mx-auto hover:bg-slate-200 hover:cursor-pointer rounded'>
+        <div className='flex flex-col items-center justify-start text-[14px] border-b-2 mx-auto hover:bg-slate-200 rounded'>
             <div className='flex justify-center items-center gap-2'>
                 {!operationInfoActive ?
                     <IconButton onClick={toggledInfo}>
@@ -66,7 +66,7 @@ export const SentOperationItem: React.FC<ISentOperation> = (props) => {
                     <div className='w-[70px] font-semibold'>{plannedDate}</div>
                     <div className='w-[90px] font-semibold'>{warehouse}</div>
                     <div className='w-[50px]'>{weight} кг.</div>
-                    <div className='w-[50px]'>{boxCount} мест</div>
+                    <div className='w-[50px]'>мест: {boxCount}</div>
                 </div>
             }
         </div>
